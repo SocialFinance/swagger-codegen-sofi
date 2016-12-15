@@ -15,11 +15,9 @@ public class Java2Generator extends AbstractJavaCodegen implements BeanValidatio
 	@SuppressWarnings("hiding")
     private static final Logger LOGGER = LoggerFactory.getLogger(Java2Generator.class);
 
-    public static final String PARCELABLE_MODEL = "parcelableModel";
     public static final String CLIENT_NAME = "clientName";
     public static final String CONSUL_NAME = "consulName";
 
-    protected boolean parcelableModel = false;
     protected boolean useBeanValidation = false;
 
     public Java2Generator() {
@@ -31,7 +29,6 @@ public class Java2Generator extends AbstractJavaCodegen implements BeanValidatio
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
 
-        cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(new CliOption(CLIENT_NAME, "sets the name of the ApiClient file."));
         cliOptions.add(new CliOption(CONSUL_NAME, "sets the name of the consul lookup."));
@@ -64,12 +61,6 @@ public class Java2Generator extends AbstractJavaCodegen implements BeanValidatio
     @Override
     public void processOpts() {
         super.processOpts();
-
-        if (additionalProperties.containsKey(PARCELABLE_MODEL)) {
-            this.setParcelableModel(Boolean.valueOf(additionalProperties.get(PARCELABLE_MODEL).toString()));
-        }
-        // put the boolean value back to PARCELABLE_MODEL in additionalProperties
-        additionalProperties.put(PARCELABLE_MODEL, parcelableModel);
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
@@ -133,10 +124,6 @@ public class Java2Generator extends AbstractJavaCodegen implements BeanValidatio
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
         return objs;
-    }
-
-    public void setParcelableModel(boolean parcelableModel) {
-        this.parcelableModel = parcelableModel;
     }
 
     public void setUseBeanValidation(boolean useBeanValidation) {
