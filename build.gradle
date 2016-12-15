@@ -9,7 +9,7 @@ description = "java2-swagger-codegen"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-if(hasProperty('artifactory_user') && hasProperty('artifactory_password')) {
+if(hasProperty('artifactory_user') && hasProperty('artifactory_password') && hasProperty('artifactory_context')) {
     artifactory {
         contextUrl = "${artifactory_context}"
         publish {
