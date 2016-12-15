@@ -9,6 +9,23 @@ description = "java2-swagger-codegen"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+if(hasProperty('artifactory_user') && hasProperty('artifactory_password')) {
+    artifactory {
+        contextUrl = "${artifactory_context}"
+        publish {
+            repository {
+                repoKey = "libs-release-local"
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+            }
+            defaults {
+                publishArtifacts = true
+                publishIvy = false
+            }
+        }
+    }
+}
+
 repositories {
         
      maven { url "https://repo1.maven.org/maven2" }
