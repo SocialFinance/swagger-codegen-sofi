@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'io.swagger'
+version = '1.0.0'
+
+description = "java2-swagger-codegen"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+        
+     maven { url "https://repo1.maven.org/maven2" }
+     maven { url "http://mvnrepository.com/artifact/" }
+}
+dependencies {
+    compile group: 'io.swagger', name: 'swagger-codegen', version:'2.2.1'
+}
+//packaging tests
+task packageTests(type: Jar) {
+  from sourceSets.test.output
+  classifier = 'tests'
+}
+artifacts.archives packageTests
