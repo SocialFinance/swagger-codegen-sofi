@@ -1,13 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: "com.jfrog.artifactory"
 
-group = 'io.swagger'
-version = '1.0.0'
+group = 'io.swagger.sofi'
 
 description = "java2-swagger-codegen"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.0"
+    }
+}
 
 if(hasProperty('artifactory_user') && hasProperty('artifactory_password') && hasProperty('artifactory_context')) {
     artifactory {
