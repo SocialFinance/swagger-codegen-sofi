@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 
 group = 'io.swagger.sofi'
 
@@ -33,6 +34,21 @@ if(hasProperty('artifactory_user') && hasProperty('artifactory_password') && has
             }
         }
     }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from project.components.java
+        }
+        println configurations.runtime.allDependencies
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+artifactoryPublish {
+    publications(publishing.publications.maven)
 }
 
 repositories {
